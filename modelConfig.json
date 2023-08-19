@@ -1,0 +1,5 @@
+{
+    "channels":12,
+    "numLayers": [2, 2, 4, 4],
+    "useStride": [1, 2]
+}
