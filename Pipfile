@@ -1,0 +1,38 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[[source]]
+url = "https://download.pytorch.org/whl/cpu"
+verify_ssl = true
+name = "pytorch_cpu"
+
+[[source]]
+url = "https://download.pytorch.org/whl/cu118"
+verify_ssl = true
+name = "pytorch_cuda"
+
+[packages]
+torchmetrics = "==0.11.4"
+onnx = "==1.14.0"
+mlflow = "==2.2.2"
+matplotlib = "==3.7.1"
+pydub = "==0.25.1"
+pyaudio = "*"
+tqdm = "*"
+soundfile = "*"
+sox = "*"
+
+[pytorch_cpu-packages]
+torch = {version="==2.0.1+cpu", index="pytorch_cpu" }
+torchaudio = {version="==2.0.2+cpu", index="pytorch_cpu" }
+
+
+[pytorch_cuda-packages]
+torch = {version="==2.0.1+cu118", index="pytorch_cuda" }
+torchaudio = {version="==2.0.2+cu118", index="pytorch_cuda" }
+
+
+[requires]
+python_version = "3.11"

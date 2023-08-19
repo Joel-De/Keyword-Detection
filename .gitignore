@@ -155,3 +155,4 @@ mlruns/
 mlartifacts/
 artif/
 hyper.py
+Pipfile.lock

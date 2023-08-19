@@ -1,5 +1,7 @@
 # Low Resource Keyword Detection [Work in progress]
 
+![thumbnail](./sources/Module_equal_dims.png)
+
 An implementation of the model architecture presented by Qualcomm ([arxiv link](https://arxiv.org/pdf/2106.04140.pdf)) for low resource keyword detection, the following repository implements a model according to the architecture outlined by them, and performs accurately on Googles speech_keyword dataset. There is a corresponding Medium [article](https://medium.com/@joeldeodhar/are-apple-amazon-always-listening-to-you-an-analysis-of-low-resource-keyword-detection-89e98e85d94c) that delves into the background and a step by step build walk through of the model which I strongly recommend checking out.
 
 # Installation
