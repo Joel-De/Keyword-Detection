@@ -3,6 +3,7 @@ import numpy as np
 import os
 import random
 import pickle
+import logging
 
 from pathlib import Path
 
@@ -135,6 +136,8 @@ def parse_args():
 if __name__ == "__main__":
     args = parse_args()
 
+    logging.getLogger().setLevel(logging.INFO)
+
     # Create directories for exported data
     os.makedirs(os.path.join(args.export_dir, "Train"), exist_ok=True)
     os.makedirs(os.path.join(args.export_dir, "Validation"), exist_ok=True)
@@ -159,7 +162,7 @@ if __name__ == "__main__":
             - random.randint(8, 10)
         )
 
-    print(f"Total number of audio clips: {len(audioClips)}")
+    logging.info(f"Total number of audio clips: {len(audioClips)}")
     sampledAudioClips = []
 
     for idx, audioClip in enumerate(audioClips):
@@ -202,8 +205,8 @@ if __name__ == "__main__":
         )
 
     threads = args.cpu_threads if args.cpu_threads else os.cpu_count()
-    print(f"Using {threads} threads to generate the dataset")
-    print(f"Generating {len(genArgsVal)} audio samples in Validation set")
+    logging.info(f"Using {threads} threads to generate the dataset")
+    logging.info(f"Generating {len(genArgsVal)} audio samples in Validation set")
     with Pool(threads) as p:
         occurrenceMap = p.starmap(overlayAudio, genArgsVal)
         with open(
@@ -211,7 +214,7 @@ if __name__ == "__main__":
         ) as outputFile:
             pickle.dump(occurrenceMap, outputFile)
 
-    print(f"Generating {len(genArgsTrain)} audio samples in Train set")
+    logging.info(f"Generating {len(genArgsTrain)} audio samples in Train set")
     with Pool(threads) as p:
         occurrenceMap = p.starmap(overlayAudio, genArgsTrain)
         with open(

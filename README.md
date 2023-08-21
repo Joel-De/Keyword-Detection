@@ -6,17 +6,38 @@ An implementation of the model architecture presented by Qualcomm ([arxiv link](
 
 # Installation
 
-In your created virtual environment run the following:
-
+### First clone the repository
 ```commandline
 git clone https://github.com/Joel-De/Keyword-Detection.git
+cd Keyword-Detection
 ```
 
+In your created virtual environment run the following:
 ```commandline
 pip install -r requirements.txt
 ```
-
 If you would instead like a GPU accelerated instance of pytorch you can install the corresponding version from Pytorch's [official page](https://pytorch.org/)
+
+
+
+### Alternatively, if you want to use pipenv, run the following:
+
+#### For Pytorch with only CPU support
+```commandline
+pipenv install -v --categories "packages pytorch_cpu"
+```
+
+#### For pytorch with only CPU+GPU (Cuda 11.8) support
+
+```commandline
+pipenv install -v --categories "packages pytorch_cuda"
+```
+
+To activate the virtual environment run
+```commandline
+pipenv shell
+```
+
 
 # Dataset
 If you wish to train the network you'll need to download and preproces the dataset first.

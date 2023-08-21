@@ -182,6 +182,7 @@ if __name__ == "__main__":
     3) The BroadcastedResidualModules with unequal inDim &outDim parameters
     """
 
+    logging.getLogger().setLevel(logging.INFO)
     with open("modelConfig.json") as modelConfigFile:
         modelConfig = json.load(modelConfigFile)
 
@@ -193,7 +194,7 @@ if __name__ == "__main__":
     pytorch_total_params = sum(
         p.numel() for p in module.parameters() if p.requires_grad
     )
-    print(f"Number of trainable params: {pytorch_total_params}")
+    logging.info(f"Number of trainable params: {pytorch_total_params}")
     torch.onnx.export(module, dummyInput, "Model.onnx")
 
     # Generate .onnx file for Module with equal inDim & outDim

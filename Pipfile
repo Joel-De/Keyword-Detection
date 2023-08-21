@@ -7,7 +7,7 @@ name = "pypi"
 url = "https://download.pytorch.org/whl/cpu"
 verify_ssl = true
 name = "pytorch_cpu"
-
+#
 [[source]]
 url = "https://download.pytorch.org/whl/cu118"
 verify_ssl = true
@@ -24,15 +24,14 @@ tqdm = "*"
 soundfile = "*"
 sox = "*"
 
-[pytorch_cpu-packages]
+[pytorch_cpu]
 torch = {version="==2.0.1+cpu", index="pytorch_cpu" }
 torchaudio = {version="==2.0.2+cpu", index="pytorch_cpu" }
 
-
-[pytorch_cuda-packages]
-torch = {version="==2.0.1+cu118", index="pytorch_cuda" }
-torchaudio = {version="==2.0.2+cu118", index="pytorch_cuda" }
-
+[pytorch_cuda]
+torch = {version="==2.0.1", index="pytorch_cuda" }
+torchaudio = {version="==2.0.2", index="pytorch_cuda" }
+opencv-python="*"
 
 [requires]
 python_version = "3.11"
