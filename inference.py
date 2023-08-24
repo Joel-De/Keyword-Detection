@@ -2,7 +2,11 @@ import torch
 import torchaudio
 import logging
 import argparse
+import matplotlib.pyplot as plt
+import numpy as np
+
 from dataset import KeyWordDetectionDataset
+from collections import deque
 
 # Defined by what the model was trained on
 RATE = 16000
@@ -45,6 +49,19 @@ def parse_args():
         help="Device to run inference on, one of 'cuda' | 'cuda:{device}' | 'cpu'",
     )
 
+    parser.add_argument(
+        "--plot",
+        action="store_true",
+        help="Whether to plot the scores of each class in a live heatmap, requires gui",
+    )
+
+    parser.add_argument(
+        "--plot_length",
+        type=int,
+        default=32,
+        help="How many inferences to keep track of in the plot history",
+    )
+
     return parser.parse_args()
 
 
@@ -66,10 +83,12 @@ if __name__ == "__main__":
     if "cuda" in args.device:  # device can be 'cuda:0'
         assert torch.cuda.is_available()
 
-    model = torch.load("model.pth")
-    model.eval()
+    model = torch.load(args.model_dir)
+    model.eval() # prevents gradients from being stored
     model = model.to(args.device)
 
+    predictionHistory = deque(maxlen=args.plot_length)
+    plt.ion()
     while True:
         chunk = next(rdr.stream())
         chunks.append(chunk[0])
@@ -96,6 +115,13 @@ if __name__ == "__main__":
         with torch.autocast(args.device) and torch.no_grad():
             res = model(waveform)
 
+        if args.plot:
+            predictionHistory.append(res.detach().numpy()[0])
+            plt.imshow(np.rot90(np.array(predictionHistory)), cmap='Blues', vmin=-10, vmax=10, interpolation='nearest')
+            plt.pause(0.1)
+
+
+
         res = torch.argmax(torch.squeeze(res))
 
         if res.item() != 0:
@@ -104,3 +130,4 @@ if __name__ == "__main__":
                     res.item(), "None/Noise"
                 )
             )
+    plt.show(block=True)

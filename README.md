@@ -85,7 +85,7 @@ As such you'll likely need to install ffmpeg with an option analogous to --share
 The following is an example of the command required to run inference:
 
 ```commandline
-python inference.py --model_dir "resources/model.pth" --audio_source "Microphone (Realtek(R) Audio)" --audio_format "dshow"
+python inference.py --model_dir "resources/model.pth" --audio_source "Microphone (Realtek(R) Audio)" --audio_format "dshow" --plot
 ```
 
 More detailed instructions / resources can be found by running:
