@@ -5,6 +5,7 @@ import torchaudio
 import logging
 import pickle
 import argparse
+import shutil
 
 from torch.utils.data import Dataset
 from torchaudio.transforms import TimeMasking, TimeStretch, FrequencyMasking
@@ -78,14 +79,15 @@ class KeyWordDetectionDataset(Dataset):
 
     def __preprocess(self, filepath):
         waveform, sample_rate = torchaudio.load(filepath, normalize=True)
-
         n_mels = 40  # this was 40
+        # print(sample_rate)
         trans = torchaudio.transforms.MelSpectrogram(
             sample_rate=sample_rate,
             hop_length=160,
             n_fft=512,
             win_length=480,
             n_mels=n_mels,
+            normalized=True
         )
         tensor = trans(waveform)
         waveform = torch.nn.functional.pad(
@@ -109,7 +111,6 @@ class KeyWordDetectionDataset(Dataset):
         if self.cached:
             with open(os.path.join(self.tmpDir, f"{idx}.pb"), "rb") as file:
                 waveform = pickle.load(file)
-                # print(waveform.shape)
         else:
             waveform = self.__preprocess(self.annotations[idx]["filename"])
 

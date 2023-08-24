@@ -7,7 +7,7 @@ name = "pypi"
 url = "https://download.pytorch.org/whl/cpu"
 verify_ssl = true
 name = "pytorch_cpu"
-#
+
 [[source]]
 url = "https://download.pytorch.org/whl/cu118"
 verify_ssl = true

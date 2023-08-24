@@ -180,7 +180,7 @@ def train(
 
 def parse_args():
     parser = argparse.ArgumentParser(
-        description="Training Script for Lunar Lander Simulation"
+        description="Training Script for Keyword Detection"
     )
     parser.add_argument(
         "--batch_size", type=int, default=512, help="Batch Size for training"
@@ -189,7 +189,7 @@ def parse_args():
         "--learning_rate", type=float, default=4e-4, help="Learning rate to be used"
     )
     parser.add_argument(
-        "--epochs", type=int, default=80, help="Number of epochs to train for"
+        "--epochs", type=int, default=120, help="Number of epochs to train for"
     )
     parser.add_argument("--dataset_dir", type=str, help="Dataset directory")
     parser.add_argument(

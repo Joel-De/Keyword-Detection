@@ -65,10 +65,23 @@ from multiprocessing import Pool
 def overlayAudio(
     backgroundAudio, foregroundClips: list, exportDir: Path, exportPath: str
 ):
+    if foregroundClips[1] is None: # Just export the background
+        fileName = os.path.join(
+            exportDir, exportPath, f"background_audio_{foregroundClips[0]}.wav"
+        )
+        # print("Exporting just background")
+        backgroundAudio.export(fileName)
+        label = {"occurrences": [], "filename": fileName}
+        label["occurrences"].append(("background", 0,1))
+        return label
+
     positionList = random.sample(
         range((len(backgroundAudio)) // (MAX_SAMPLE_LENGTH // RESOLUTION)),
         len(foregroundClips[1]),
     )
+
+
+
     positionList = np.array(positionList) * (
         MAX_SAMPLE_LENGTH // RESOLUTION
     )  # no audio in the 500 ms
@@ -78,11 +91,11 @@ def overlayAudio(
     )
     label = {"occurrences": [], "filename": fileName}
     position, audioClip = positionList[0], foregroundClips[1]
-    position = random.randint(0, 499)
+    position = random.randint(0, 200)
     fg = AudioSegment.from_file(audioClip[1]) + random.randint(2, 5)
 
-    if random.randint(0, 5) == 0:
-        backgroundAudio = backgroundAudio.overlay(fg, position=position) - 2
+    if random.randint(0, 3) == 0:
+        backgroundAudio = backgroundAudio.overlay(fg, position=position) - random.randint(5,10)
     else:
         backgroundAudio = fg
 
@@ -190,6 +203,17 @@ if __name__ == "__main__":
             )
         )
 
+        if random.randint(0,10) == 0:
+            genArgsTrain.append(
+                (
+                    sampledBackgroundAudio[start: start + args.clip_length],
+                    (sample[0], None),
+                    args.export_dir,
+                    "Train",
+                )
+            )
+
+# python generate_dataset.py --source_dir "C:\datasets\speech_commands_v0.02" --export_dir "C:\datasets\newexport2"
     genArgsVal = []
 
     for sample in audioSamplesVal:
@@ -203,6 +227,16 @@ if __name__ == "__main__":
                 "Validation",
             )
         )
+
+        if random.randint(0,10) == 0:
+            genArgsTrain.append(
+                (
+                    sampledBackgroundAudio[start: start + args.clip_length],
+                    (sample[0], None),
+                    args.export_dir,
+                    "Validation",
+                )
+            )
 
     threads = args.cpu_threads if args.cpu_threads else os.cpu_count()
     logging.info(f"Using {threads} threads to generate the dataset")
