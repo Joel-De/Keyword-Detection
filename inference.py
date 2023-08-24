@@ -14,7 +14,9 @@ divs = 2
 
 def parse_args():
     parser = argparse.ArgumentParser(
-        description="Runs inference on an audio input device"
+        description="Runs inference on an audio input device, refference "
+                    "https://pytorch.org/audio/main/generated/torchaudio.io.StreamReader.html for help with"
+                    "--audio_source and --audio_foramt arguments"
     )
     parser.add_argument(
         "--model_dir",

@@ -1,4 +1,4 @@
-# Low Resource Keyword Detection [Work in progress]
+# Low Resource Keyword Detection
 
 ![thumbnail](./resources/Module_equal_dims.png)
 
@@ -75,6 +75,24 @@ python train.py -h
 ```
 
 which will provide a list of available arguments as well as their function
+
+# Inference / Testing
+
+There is a provided model in ./resources/model.pth, trained on the above mentioned dataset. To run inference, FFmpeg libraries will need to be installed as they are a direct dependency of torchaudio's StreamReader. Note that this is specifically the dynamic libraries and not the commandline utility itself. 
+
+As such you'll likely need to install ffmpeg with an option analogous to --shared
+
+The following is an example of the command required to run inference:
+
+```commandline
+python inference.py --model_dir "resources/model.pth" --audio_source "Microphone (Realtek(R) Audio)" --audio_format "dshow"
+```
+
+More detailed instructions / resources can be found by running:
+
+```commandline
+python inference.py -h
+```
 
 ### Citations:
 
