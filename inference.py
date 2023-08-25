@@ -84,10 +84,11 @@ if __name__ == "__main__":
         assert torch.cuda.is_available()
 
     model = torch.load(args.model_dir)
-    model.eval() # prevents gradients from being stored
+    model.eval()  # prevents gradients from being stored
     model = model.to(args.device)
 
     predictionHistory = deque(maxlen=args.plot_length)
+    fig, ax = plt.subplots()
     plt.ion()
     while True:
         chunk = next(rdr.stream())
@@ -118,9 +119,9 @@ if __name__ == "__main__":
         if args.plot:
             predictionHistory.append(res.detach().numpy()[0])
             plt.imshow(np.rot90(np.array(predictionHistory)), cmap='Blues', vmin=-10, vmax=10, interpolation='nearest')
+            classes = ["Stop", "Marvin", "None"]
+            ax.set_yticks(np.arange(len(classes)), labels=classes)
             plt.pause(0.1)
-
-
 
         res = torch.argmax(torch.squeeze(res))
 
