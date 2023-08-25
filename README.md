@@ -40,7 +40,7 @@ pipenv shell
 
 
 # Dataset
-If you wish to train the network you'll need to download and preproces the dataset first.
+If you wish to train the network you'll need to download and preprocess the dataset first.
 The dataset used is Google's [speech_commands](tensorflow.org/datasets/catalog/speech_commands) dataset, this can be downloaded [directly](http://download.tensorflow.org/data/speech_commands_v0.02.tar.gz). Once downloaded, run the following python script in order to preprocess the dataset.
 
 ```commandline
@@ -58,7 +58,7 @@ Note that at this time training on custom data isn't supported, thought it might
 
 To train the network using default settings run the following commands:
 
-First launch an mlflow server which will be used to log metrics and model checkpoints (you can skip this if you already have an instance running and instead pass the tracking URI as an argument to the training script)
+First launch a mlflow server which will be used to log metrics and model checkpoints (you can skip this if you already have an instance running and instead pass the tracking URI as an argument to the training script)
 ```commandline
 mlflow server
 ```
@@ -78,15 +78,17 @@ which will provide a list of available arguments as well as their function
 
 # Inference / Testing
 
-There is a provided model in ./resources/model.pth, trained on the above mentioned dataset. To run inference, FFmpeg libraries will need to be installed as they are a direct dependency of torchaudio's StreamReader. Note that this is specifically the dynamic libraries and not the commandline utility itself. 
+There is a provided model in ./resources/model.pth, trained on the above-mentioned dataset. To run inference, FFmpeg libraries will need to be installed as they are a direct dependency of torchaudio's StreamReader. Note that this is specifically the dynamic libraries and not the commandline utility itself. 
 
 As such you'll likely need to install ffmpeg with an option analogous to --shared
 
-The following is an example of the command required to run inference:
+The following is an example of the command required to run inference, this will print out when a detection of the word 'Marvin' or 'Stop' has been made. When run with the --plot argument, a visualization is generated that shows the probability of each class in realtime. The darker the color the higher the probability of the pertaining class. Detections are made by taking the maximum probability for each timestep.
 
 ```commandline
 python inference.py --model_dir "resources/model.pth" --audio_source "Microphone (Realtek(R) Audio)" --audio_format "dshow" --plot
 ```
+
+![thumbnail](./resources/live_visualization.PNG)
 
 More detailed instructions / resources can be found by running:
 
