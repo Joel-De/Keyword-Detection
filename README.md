@@ -40,7 +40,7 @@ pipenv shell
 
 
 # Dataset
-If you wish to train the network you'll need to download and preproces the dataset first.
+If you wish to train the network you'll need to download and preprocess the dataset first.
 The dataset used is Google's [speech_commands](tensorflow.org/datasets/catalog/speech_commands) dataset, this can be downloaded [directly](http://download.tensorflow.org/data/speech_commands_v0.02.tar.gz). Once downloaded, run the following python script in order to preprocess the dataset.
 
 ```commandline
@@ -78,7 +78,7 @@ which will provide a list of available arguments as well as their function
 
 # Inference / Testing
 
-There is a provided model in ./resources/model.pth, trained on the above mentioned dataset. To run inference, FFmpeg libraries will need to be installed as they are a direct dependency of torchaudio's StreamReader. Note that this is specifically the dynamic libraries and not the commandline utility itself. 
+There is a provided model in ./resources/model.pth, trained on the above-mentioned dataset. To run inference, FFmpeg libraries will need to be installed as they are a direct dependency of torchaudio's [StreamReader](https://pytorch.org/audio/main/generated/torchaudio.io.StreamReader.html). Note that this is specifically the dynamic libraries and not the commandline utility itself. 
 
 As such you'll likely need to install ffmpeg with an option analogous to --shared
 
@@ -93,6 +93,9 @@ More detailed instructions / resources can be found by running:
 ```commandline
 python inference.py -h
 ```
+
+Below is a sample of what inference looks like when configured correctly:
+[![](https://img.youtube.com/vi/WoFJCFhTaUc/0.jpg)](https://www.youtube.com/watch?v=WoFJCFhTaUc)
 
 ### Citations:
 
